@@ -15,10 +15,25 @@ public class App {
 		String modelo = scan.nextLine();
 		
 		Veiculo veiculo = new Veiculo(placa, marca, modelo);
-		veiculo.setMarca("Dodge");
-
-		System.out.printf("O veiculo %s %s, com placa %s deu entrada no estacionamento.\n",
-				veiculo.getMarca(), veiculo.getModelo(), veiculo.getPlaca());
+		Ticket ticket = new Ticket(veiculo);
+		
+		System.out.println(veiculo);
+		System.err.println(ticket); // err -> Exibição de erro -> Fica vermelho no terminal
+		
+		System.out.printf("O veiculo %s %s, com placa %s deu entrada no estacionamento na data de %s.\n",
+				ticket.getVeiculo().getMarca(), ticket.getVeiculo().getModelo(), ticket.getVeiculo().getPlaca(), ticket.entradaParaTexto());
+		
+		try { // Aguarda um minuto
+			Thread.sleep(60000);
+		} catch(Exception e) {
+			
+		}
+		
+		ticket.registraSaida();
+		System.err.println(ticket);
+		System.out.printf("O veiculo %s %s, com placa %s deu saida do estacionamento na data de %s.\nO valor pago foi de R$ %.2f.",
+				ticket.getVeiculo().getMarca(), ticket.getVeiculo().getModelo(), ticket.getVeiculo().getPlaca(), ticket.saidaParaTexto(), ticket.getValor());
+		
 		
 		scan.close();
 	}
