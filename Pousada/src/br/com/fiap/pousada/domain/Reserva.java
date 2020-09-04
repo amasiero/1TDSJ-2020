@@ -2,6 +2,8 @@ package br.com.fiap.pousada.domain;
 
 import java.time.LocalDate;
 
+import br.com.fiap.pousada.helper.DateHelper;
+
 public class Reserva {
 	
 	private Long id;
@@ -44,6 +46,13 @@ public class Reserva {
 	
 	public Integer getQtdePessoas() {
 		return qtdePessoas;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Reserva #%s -> {\n\tQuarto nro: %s, \n\tData de entrada: %s, "
+				+ "\n\tData de saída: %s, \n\tQtde. Pessoas: %s \n}", id, quarto.getNumero(), 
+				DateHelper.toText(dataEntrada), DateHelper.toText(dataSaida), qtdePessoas);
 	}
 
 }

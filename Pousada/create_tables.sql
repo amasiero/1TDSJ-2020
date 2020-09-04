@@ -19,3 +19,5 @@ create table tb_reserva (
 );
 
 create sequence sq_reserva increment by 1 start with 1 nocycle order;
+
+select * from tb_reserva;
