@@ -14,4 +14,12 @@ public class DateHelper {
 	public static LocalDate toDate(String value) {
 		return LocalDate.parse(value, formatter);
 	}
+	
+	public static Boolean ehAnteriorAtual(LocalDate data) {
+		return data.isBefore(LocalDate.now());
+	}
+	
+	public static Boolean ehMaiorQueEntrada(LocalDate entrada, LocalDate saida) {
+		return saida.isBefore(entrada.plusDays(2));
+	}
 }

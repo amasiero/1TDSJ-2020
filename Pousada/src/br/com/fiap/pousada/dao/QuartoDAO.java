@@ -11,8 +11,24 @@ import java.util.List;
 import br.com.fiap.pousada.domain.Categoria;
 import br.com.fiap.pousada.domain.Quarto;
 
+/**
+ * 
+ * <p>Essa é uma classe que contém os métodos de acesso ao banco de dados, para objetos do tipo 
+ * {@link br.com.fiap.pousada.domain.Quarto}.</p>
+ * 
+ *
+ * 
+ * @author Andrey Masiero
+ * @version 1.0
+ * 
+ */
 public class QuartoDAO {
 
+	/**
+	 * Objeto que recebe a conexão com o banco de dados.
+	 * 
+	 * @see java.sql.Connection
+	 */
 	Connection conn;
 	
 	private void conecta() throws ClassNotFoundException, SQLException {
@@ -40,6 +56,20 @@ public class QuartoDAO {
 		return quartos.isEmpty() ? null : quartos;
 	}
 	
+	/**
+	 * <p>Método que retorna um quarto com base no número.</p>
+	 * <p>Nele utiliza-se classes do pacote do java.sql. Para mais detalhes acesse 
+	 * 	<a href="https://xkcd.com/2357/">aqui</a>.
+	 * </p>
+	 * 
+	 * @param numero identificação do quarto da pousada
+	 * @return em caso de existência retorna o objeto referente ao {@link br.com.fiap.pousada.domain.Quarto} da pousada
+	 * @throws ClassNotFoundException quando não encontrar o driver de conexão
+	 * @throws SQLException algum erro de sql
+	 * 
+	 * @see <a href="https://xkcd.com/1736/">TASK #1 - Criação do acesso aos dados</a>
+	 * @since 1.0
+	 */
 	public Quarto consultaPorNumero(Integer numero) throws ClassNotFoundException, SQLException {
 		Quarto quarto = null;
 		this.conecta();

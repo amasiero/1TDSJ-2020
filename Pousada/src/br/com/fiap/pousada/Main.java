@@ -10,6 +10,7 @@ import br.com.fiap.pousada.domain.Categoria;
 import br.com.fiap.pousada.domain.Pousada;
 import br.com.fiap.pousada.domain.Quarto;
 import br.com.fiap.pousada.domain.Reserva;
+import br.com.fiap.pousada.exception.ReservaException;
 import br.com.fiap.pousada.helper.DateHelper;
 
 public class Main {
@@ -69,8 +70,8 @@ public class Main {
 			Reserva reserva = new Reserva(quarto, dataEntrada, dataSaida, qtdePessoas);
 			pousada.efetuaReserva(reserva);
 			
-		} catch(Exception e) {
-			System.err.println(e.getClass() + " - " + e.getMessage());
+		} catch(ReservaException | ClassNotFoundException | SQLException e) {
+			System.err.println(e.getClass().getName() + " - " + e.getMessage());
 		}
 		
 		System.out.println("\nReserva cadastrada com sucesso. #-->");

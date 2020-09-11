@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"br.com.fiap.pousada"},{"l":"br.com.fiap.pousada.dao"},{"l":"br.com.fiap.pousada.domain"},{"l":"br.com.fiap.pousada.exception"},{"l":"br.com.fiap.pousada.helper"},{"l":"br.com.fiap.pousada.validation"}]
