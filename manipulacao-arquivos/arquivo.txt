@@ -1,0 +1,4 @@
+#--- Meu primeiro arquivo com Java 15 ---#
+- Hello World -
+- Hello Arquivos! -
+- Agora estamos sem o close! Fecha sozinho! -

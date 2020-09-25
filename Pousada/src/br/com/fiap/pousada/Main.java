@@ -1,5 +1,6 @@
 package br.com.fiap.pousada;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Main {
 			} while(opcao != 0);
 			
 			System.out.println("#--- Programa finalizado com suscesso ---#");
-		} catch(ClassNotFoundException | SQLException e) {
+		} catch(ClassNotFoundException | IOException | SQLException e) {
 			System.err.println(e.getMessage());
 		}
 
@@ -46,7 +47,7 @@ public class Main {
 	private static void cadastraReserva(Scanner scan, Pousada pousada) {
 		System.out.println("\n#--> Cadastro de Reserva");
 		
-		System.out.print("\nInforme o número do quarto: > ");
+		System.out.print("\nInforme o numero do quarto: > ");
 		Integer numero = scan.nextInt();
 		scan.nextLine();
 		
@@ -56,21 +57,21 @@ public class Main {
 		System.out.print("\nInforme a data de saida: > ");
 		LocalDate dataSaida = DateHelper.toDate(scan.nextLine());
 		
-		System.out.print("\nInforme o número de pessoas: > ");
+		System.out.print("\nInforme o numero de pessoas: > ");
 		Integer qtdePessoas = scan.nextInt();
 		
 		try {
 			Quarto quarto = new QuartoDAO().consultaPorNumero(numero);
 			
 			if(quarto == null) {
-				System.err.println("Quarto informado não existe.");
+				System.err.println("Quarto informado nao existe.");
 				return;
 			}
 			
 			Reserva reserva = new Reserva(quarto, dataEntrada, dataSaida, qtdePessoas);
 			pousada.efetuaReserva(reserva);
 			
-		} catch(ReservaException | ClassNotFoundException | SQLException e) {
+		} catch(ReservaException | ClassNotFoundException | IOException | SQLException e) {
 			System.err.println(e.getClass().getName() + " - " + e.getMessage());
 		}
 		
@@ -89,7 +90,7 @@ public class Main {
 		try {
 			List<Quarto> quartos = new QuartoDAO().consultaTodos();
 			quartos.forEach(System.out::println);
-		} catch(ClassNotFoundException | SQLException e) {
+		} catch(IOException | SQLException e) {
 			System.err.println(e.getMessage());
 		}
 		System.out.println("\nConsulta realizada com sucesso. #-->");
@@ -98,24 +99,24 @@ public class Main {
 	private static void cadastraQuarto(Scanner scan) {
 		System.out.println("\n#--> Cadastro de Quarto");
 		
-		System.out.print("\nInforme o número do quarto: > ");
+		System.out.print("\nInforme o numero do quarto: > ");
 		Integer numero = scan.nextInt();
 		
 		System.out.println("\nEscolha a categoria do quarto.");
 		System.out.print("Digite: 1 - VIP | 2 - Apartamento > ");
 		Categoria categoria = scan.nextInt() == 1 ? Categoria.VIP : Categoria.APARTAMENTO;
 		
-		System.out.print("\nInforme a capacidade máxima de pessoas: > ");
+		System.out.print("\nInforme a capacidade maxima de pessoas: > ");
 		Integer maxPessoas = scan.nextInt();
 		
-		System.out.print("\nInforme o valor da diária: > ");
+		System.out.print("\nInforme o valor da diaria: > ");
 		Double valorDiaria = scan.nextDouble();
 		
 		Quarto quarto = new Quarto(numero, categoria, maxPessoas, valorDiaria);
 
 		try {
 			new QuartoDAO().salva(quarto);
-		} catch(ClassNotFoundException | SQLException e) {
+		} catch(IOException | SQLException e) {
 			System.err.println(e.getMessage());
 		}
 		
@@ -126,7 +127,7 @@ public class Main {
 		System.out.println("|-----------------------------|");
 		System.out.println("|          POUSADA            |");
 		System.out.println("|                             |");
-		System.out.println("| Digite a opção desejada:    |");
+		System.out.println("| Digite a opcao desejada:    |");
 		System.out.println("| 1 - Cadastrar quarto        |");
 		System.out.println("| 2 - Cadastrar reserva       |");
 		System.out.println("| 3 - Consultar quartos       |");

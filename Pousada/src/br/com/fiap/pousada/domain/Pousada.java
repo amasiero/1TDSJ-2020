@@ -1,5 +1,6 @@
 package br.com.fiap.pousada.domain;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,12 @@ public class Pousada {
 		this.reservas = new ArrayList<>();
 	}
 	
-	public void atualiza() throws ClassNotFoundException, SQLException {
+	public void atualiza() throws ClassNotFoundException, SQLException, IOException {
 		List<Reserva> reservas = new ReservaDAO().consultaTodas();
 		if(reservas != null) this.reservas = reservas;
 	}
 	
-	public void efetuaReserva(Reserva reserva) throws ReservaException, ClassNotFoundException, SQLException {
+	public void efetuaReserva(Reserva reserva) throws ReservaException, ClassNotFoundException, SQLException, IOException {
 		ReservaValidator.validaMaxQuartos(reservas, reserva.getQuarto().getCategoria());
 		ReservaValidator.validaDataEntrada(reserva);
 		ReservaValidator.validaDataSaida(reserva);
