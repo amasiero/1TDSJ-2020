@@ -1,5 +1,6 @@
 package br.com.fiap.pousada.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -9,19 +10,27 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import br.com.fiap.pousada.domain.Quarto;
 import br.com.fiap.pousada.domain.Reserva;
+import br.com.fiap.pousada.helper.FileHelper;
 
 public class ReservaDAO {
 
 	Connection conn;
 
-	private void conecta() throws ClassNotFoundException, SQLException {
-		this.conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "system");
+	private void conecta() throws ClassNotFoundException, SQLException, IOException {
+		Class.forName("oracle.jdbc.driver.OracleDriver"); // Ã‰ obrigatÃ³rio se estiver com o Java EE (Servlet)
+		Properties props = FileHelper.loadProperties();
+		this.conn = DriverManager.getConnection(
+				props.getProperty("database.url"),
+				props.getProperty("database.user"),
+				props.getProperty("database.password")
+		);
 	}
 	
-	public List<Reserva> consultaTodas() throws ClassNotFoundException, SQLException {
+	public List<Reserva> consultaTodas() throws ClassNotFoundException, IOException, SQLException {
 		List<Reserva> reservas = new ArrayList<>();
 		this.conecta();
 		
@@ -45,7 +54,7 @@ public class ReservaDAO {
 		return reservas.isEmpty() ? null : reservas;
 	}
 	
-	public Reserva salva(Reserva reserva) throws ClassNotFoundException, SQLException {
+	public Reserva salva(Reserva reserva) throws ClassNotFoundException, SQLException, IOException {
 		this.conecta();
 		
 		String sql = "select sq_reserva.nextval as id from dual";
@@ -59,13 +68,15 @@ public class ReservaDAO {
 		
 		if(id == null) {
 			this.desconecta();
-			throw new SQLException("Não foi possível gerar o id da reserva");
+			throw new SQLException("Nï¿½o foi possï¿½vel gerar o id da reserva");
 		}
 		
 		reserva.setId(id);
 		
-		sql = "insert into tb_reserva(id, id_quarto, data_entrada, data_saida, qtde_pessoas) "
-				+ "values(?, ?, ?, ?, ?)";
+		sql = """
+    			insert into tb_reserva(id, id_quarto, data_entrada, data_saida, qtde_pessoas) 
+				values(?, ?, ?, ?, ?)
+			 """;
 		stmt = conn.prepareStatement(sql);
 		
 		stmt.setLong(1, reserva.getId());
